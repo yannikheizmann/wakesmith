@@ -1,0 +1,67 @@
+site_name: wakesmith
+site_description: Train custom openWakeWord-compatible wake-word models with one command
+site_url: https://yannikheizmann.github.io/wakesmith/
+repo_url: https://github.com/yannikheizmann/wakesmith
+repo_name: yannikheizmann/wakesmith
+copyright: Copyright &copy; 2026 Yannik Heizmann
+
+theme:
+  name: material
+  logo: assets/wakesmith_logo_white.svg
+  favicon: assets/wakesmith_favicon.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  features:
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Guides:
+      - Installation: guides/installation.md
+      - Training a wake word: guides/usage.md
+      - Using the model: guides/deployment.md
+  - Method:
+      - Overview: method/index.md
+      - Synthesis and screening: method/synthesis.md
+      - Runtime-identical features: method/features.md
+      - Training: method/training.md
+      - Evaluation: method/evaluation.md
+  - Languages: languages.md
+  - Configuration: configuration.md
+  - Results: results.md
+  - Upstream findings: findings.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yannikheizmann/wakesmith
+      name: wakesmith on GitHub

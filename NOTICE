@@ -1,0 +1,16 @@
+wakesmith
+Copyright 2026 Yannik Heizmann
+
+This product depends on, and adapts ideas from, the following Apache-2.0 projects:
+
+- openWakeWord (David Scripka): feature front end, streaming runtime and precomputed
+  ACAV100M/validation features. https://github.com/dscripka/openWakeWord
+- livekit-wakeword (LiveKit): conv-attention classifier, focal-loss training schedule
+  and the Piper VITS sample generator. https://github.com/livekit/livekit-wakeword
+- Kokoro-82M (hexgrad): text-to-speech model and voices. https://huggingface.co/hexgrad/Kokoro-82M
+
+Further models and datasets are downloaded at run time and remain under their own terms:
+VoxCPM2 (OpenBMB), Whisper large-v3-turbo (OpenAI), Piper LibriTTS voice (Rhasspy),
+MUSAN (OpenSLR), MIT environmental impulse responses, Multilingual LibriSpeech (Meta)
+and ACAV100M-derived features. Check each licence before distributing trained models
+for commercial use.

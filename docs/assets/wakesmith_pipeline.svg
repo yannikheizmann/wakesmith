@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="wakesmith pipeline from wake word to evaluated ONNX model">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#9aa0bd"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #d6d9e8; stroke-width: 2; }
+      .key { fill: #14172b; }
+      .title { font: 700 19px Inter, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #14172b; }
+      .line { font: 14px Inter, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #5a607e; }
+      .edge { stroke: #9aa0bd; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .num { font: 700 15px Inter, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff; }
+    </style>
+  </defs>
+  <g>
+    <rect class="key" x="10" y="110" width="130" height="80" rx="16"/>
+    <text x="75" y="145" text-anchor="middle" class="num" font-size="16">wake word</text>
+    <text x="75" y="170" text-anchor="middle" fill="#ff8a3d" font-family="'JetBrains Mono', monospace" font-size="15">"tomtom"</text>
+  </g>
+  <path class="edge" d="M140 150H170"/>
+  <g transform="translate(175 60)">
+    <rect class="box" width="190" height="180" rx="16"/>
+    <circle cx="24" cy="26" r="13" fill="#ff8a3d"/><text x="24" y="31" text-anchor="middle" class="num">1</text>
+    <text x="46" y="32" class="title">Synthesise</text>
+    <text x="18" y="70" class="line">Kokoro voice blends</text>
+    <text x="18" y="94" class="line">VoxCPM2 voice design</text>
+    <text x="18" y="118" class="line">Piper confusables</text>
+    <text x="18" y="150" class="line">positives + phonetic</text>
+    <text x="18" y="170" class="line">neighbours</text>
+  </g>
+  <path class="edge" d="M365 150H395"/>
+  <g transform="translate(400 60)">
+    <rect class="box" width="170" height="180" rx="16"/>
+    <circle cx="24" cy="26" r="13" fill="#ff8a3d"/><text x="24" y="31" text-anchor="middle" class="num">2</text>
+    <text x="46" y="32" class="title">Screen</text>
+    <text x="18" y="70" class="line">Whisper transcript</text>
+    <text x="18" y="94" class="line">IPA consonant</text>
+    <text x="18" y="114" class="line">skeleton match</text>
+    <text x="18" y="150" class="line">drops misspoken</text>
+    <text x="18" y="170" class="line">positives</text>
+  </g>
+  <path class="edge" d="M570 150H600"/>
+  <g transform="translate(605 60)">
+    <rect class="box" width="180" height="180" rx="16"/>
+    <circle cx="24" cy="26" r="13" fill="#ff8a3d"/><text x="24" y="31" text-anchor="middle" class="num">3</text>
+    <text x="46" y="32" class="title">Features</text>
+    <text x="18" y="70" class="line">rooms, noise, music,</text>
+    <text x="18" y="90" class="line">pitch, level</text>
+    <text x="18" y="118" class="line">streamed exactly like</text>
+    <text x="18" y="138" class="line">the openWakeWord</text>
+    <text x="18" y="158" class="line">runtime</text>
+  </g>
+  <path class="edge" d="M785 150H815"/>
+  <g transform="translate(820 60)">
+    <rect class="box" width="180" height="180" rx="16"/>
+    <circle cx="24" cy="26" r="13" fill="#ff8a3d"/><text x="24" y="31" text-anchor="middle" class="num">4</text>
+    <text x="46" y="32" class="title">Train</text>
+    <text x="18" y="70" class="line">conv-attention head</text>
+    <text x="18" y="94" class="line">2,000 h negatives</text>
+    <text x="18" y="118" class="line">hard-negative mining</text>
+    <text x="18" y="142" class="line">threshold chosen</text>
+    <text x="18" y="162" class="line">on validation</text>
+  </g>
+  <path class="edge" d="M1000 150H1030"/>
+  <g transform="translate(1035 60)">
+    <rect class="key" width="155" height="180" rx="16"/>
+    <circle cx="24" cy="26" r="13" fill="#ff8a3d"/><text x="24" y="31" text-anchor="middle" class="num" fill="#14172b">5</text>
+    <text x="46" y="32" class="num" font-size="19">Evaluate</text>
+    <text x="16" y="70" font-family="Inter, sans-serif" font-size="14" fill="#c8cbe0">unseen voices,</text>
+    <text x="16" y="90" font-family="Inter, sans-serif" font-size="14" fill="#c8cbe0">rooms and speech</text>
+    <text x="16" y="138" font-family="'JetBrains Mono', monospace" font-size="15" fill="#ff8a3d">tomtom.onnx</text>
+    <text x="16" y="160" font-family="'JetBrains Mono', monospace" font-size="15" fill="#ff8a3d">report.md</text>
+  </g>
+</svg>

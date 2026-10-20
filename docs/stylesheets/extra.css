@@ -1,0 +1,48 @@
+:root {
+  --wakesmith-ink: #14172b;
+  --wakesmith-ember: #ff8a3d;
+  --wakesmith-ash: #c8cbe0;
+  --md-primary-fg-color: var(--wakesmith-ink);
+  --md-primary-fg-color--light: #262a4a;
+  --md-primary-fg-color--dark: var(--wakesmith-ink);
+  --md-accent-fg-color: var(--wakesmith-ember);
+  --md-typeset-a-color: #c4561a;
+}
+
+.md-header__button.md-logo img {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  color: var(--wakesmith-ink);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+
+.md-typeset .md-button--primary {
+  background-color: var(--wakesmith-ink);
+  border-color: var(--wakesmith-ink);
+}
+
+.md-typeset .md-button:focus,
+.md-typeset .md-button:hover {
+  background-color: var(--wakesmith-ember);
+  border-color: var(--wakesmith-ember);
+  color: var(--wakesmith-ink);
+}
+
+.md-typeset img.figure {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+.homepage-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}

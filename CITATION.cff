@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use wakesmith in your work, please cite it using these metadata."
+type: software
+title: "wakesmith: one-command training of custom openWakeWord-compatible wake-word models"
+authors:
+  - family-names: Heizmann
+    given-names: Yannik
+    email: research@yannikheizmann.com
+    orcid: https://orcid.org/0009-0008-7010-1321
+repository-code: "https://github.com/yannikheizmann/wakesmith"
+url: "https://yannikheizmann.github.io/wakesmith/"
+version: 0.1.0
+date-released: 2026-10-20
+license: Apache-2.0
+keywords:
+  - wake word
+  - keyword spotting
+  - openWakeWord
+  - synthetic speech
