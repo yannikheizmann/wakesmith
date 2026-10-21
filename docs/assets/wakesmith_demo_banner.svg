@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 240" role="img" aria-label="wakesmith demo: say yambo on Hugging Face Spaces">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2A0000"/>
+      <stop offset="1" stop-color="#3A0A0A"/>
+    </linearGradient>
+    <filter id="blob" x="-10%" y="-10%" width="120%" height="120%"
+            color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 100 -38.72"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="240" rx="20" fill="url(#bg)"/>
+  <g transform="translate(-14 41) scale(0.42)" filter="url(#blob)">
+    <rect x="176" y="379" width="188" height="117" rx="20" ry="20" fill="#FFEAA5"/>
+    <rect x="218" y="256" width="188" height="69" rx="16" ry="16" fill="#FFEAA5"/>
+    <rect x="406" y="301" width="72" height="202" rx="22" ry="22" fill="#FFEAA5"/>
+    <rect x="424" y="163" width="188" height="95" rx="19" ry="19" fill="#FFEAA5"/>
+    <rect x="536" y="229" width="178" height="270" rx="35" ry="35" fill="#FFEAA5"/>
+  </g>
+  <text x="330" y="112" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="62" font-weight="800" fill="#FFEAA5" letter-spacing="-2">Try it live in your browser — say <tspan fill="#DA8C8C">“yambo”</tspan></text>
+  <text x="334" y="168" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#FFEAA5" fill-opacity="0.75">▶ Live demo on Hugging Face Spaces — no install, no upload, runs on your machine.</text>
+</svg>

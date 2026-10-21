@@ -17,6 +17,12 @@ the model holds up on voices, rooms and speech it has never heard. The result is
 ONNX model that works in any [openWakeWord](https://github.com/dscripka/openWakeWord)
 integration.
 
+<p align="center">
+  <a href="https://huggingface.co/spaces/yannikheizmann/wakesmith-demo">
+    <img src="docs/assets/wakesmith_demo_banner.svg" alt="wakesmith demo: say “yambo” live in your browser" width="720">
+  </a>
+</p>
+
 ```bash
 uv run wakesmith "tomtom"
 ```
@@ -112,11 +118,6 @@ stage, every option and the problems with the existing recipes.
 uv sync --frozen --extra dev
 uv run --frozen pytest -q
 ```
-
-## Live demo
-
-Say **"yambo"** to the model trained with wakesmith — running with the real
-openWakeWord streaming pipeline on [Hugging Face Spaces](https://huggingface.co/spaces/yannikheizmann/wakesmith-demo).
 
 ## Contributing and security
 
