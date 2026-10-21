@@ -118,7 +118,7 @@ uv run --frozen pytest -q
 ## Live demo
 
 Say **"yambo"** to the model trained with wakesmith — running with the real
-openWakeWord streaming pipeline on [Hugging Face Spaces](https://huggingface.co/spaces/yahzm/yambo-wake-word).
+openWakeWord streaming pipeline on [Hugging Face Spaces](https://huggingface.co/spaces/yannikheizmann/wakesmith-demo).
 
 ## Contributing and security
 
