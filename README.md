@@ -5,6 +5,7 @@
 <p align="center">
   <a href="https://yannikheizmann.github.io/wakesmith/"><img alt="Documentation" src="https://img.shields.io/badge/documentation-GitHub%20Pages-da8c8c?style=flat-square"></a>
   <a href="https://github.com/yannikheizmann/wakesmith/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/yannikheizmann/wakesmith/ci.yml?branch=main&style=flat-square&label=CI"></a>
+  <a href="https://huggingface.co/spaces/yannikheizmann/wakesmith-demo"><img alt="Live demo" src="https://img.shields.io/badge/demo-Say_%22yambo%22_live-da8c8c?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik02LjUgMy42djguOGw3LTQuNHoiLz48L3N2Zz4="></a>
   <a href="pyproject.toml"><img alt="Python" src="https://img.shields.io/badge/python-3.11%20%7C%203.12-3776AB?style=flat-square&logo=python&logoColor=white"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/yannikheizmann/wakesmith?style=flat-square&v=2"></a>
   <img alt="openWakeWord compatible" src="https://img.shields.io/badge/output-openWakeWord%20ONNX-2a0000?style=flat-square">
