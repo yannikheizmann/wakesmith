@@ -48,3 +48,19 @@ shared between runs through the cache.
 | `evaluation.json` | held-out measurements at all reported thresholds |
 | `validation.json`, `training-log.json` | validation metrics used for selection |
 | `clips/*/transcripts.json` | what Whisper heard for every synthetic clip |
+
+## microWakeWord output (`--micro`)
+
+`--micro` trains an int8-quantized TFLite model in the
+[microWakeWord](https://github.com/kahrendt/microWakeWord) architecture instead of an
+openWakeWord ONNX model. Synthesis and Whisper screening are identical; the feature,
+training and export stages change:
+
+- Requires `uv sync --extra micro` (TensorFlow and the `microwakeword` package).
+- Positives become micro-frontend spectrograms (40 features, 30 ms window, 10 ms step)
+  augmented with the same RIRs and background noise.
+- Negatives are the precomputed spectrograms published by the microWakeWord author.
+- Output: `<word>.tflite` and `manifest.json` (ESPHome v2 schema) in the run directory,
+  plus the training log. Expect experimentation: the microWakeWord author documents
+  that training a well-behaving model needs tuning of steps, sampling and penalty
+  weights. Tune `probability_cutoff` in `manifest.json` on your hardware.

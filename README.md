@@ -16,7 +16,9 @@ thousands of clips of people saying the word, keeps only the ones a speech recog
 hears correctly, trains against 2,000 hours of background speech, and then reports how
 the model holds up on voices, rooms and speech it has never heard. The result is a small
 ONNX model that works in any [openWakeWord](https://github.com/dscripka/openWakeWord)
-integration.
+integration. With `--micro`, trains an int8 TFLite
+[microWakeWord](https://github.com/kahrendt/microWakeWord) model instead — ready to
+flash on ESP32-S3 devices and Home Assistant Voice PE.
 
 ```bash
 uv run wakesmith "tomtom"
