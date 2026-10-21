@@ -3,24 +3,14 @@ title: Say "yambo" — wake-word demo
 emoji: 🎙️
 colorFrom: red
 colorTo: yellow
-sdk: gradio
-app_file: app.py
+sdk: static
 pinned: false
 license: apache-2.0
-short_description: Live demo of a wake-word model trained with wakesmith
+short_description: Say "yambo" to a model trained with wakesmith
 ---
 
-# Say "yambo" — live wake-word demo
-
-A wake-word classifier trained with
-[wakesmith](https://github.com/yannikheizmann/wakesmith), running with the exact
-openWakeWord streaming pipeline in the browser-free, native onnxruntime.
-
-- Allow the microphone, press record, and say **"yambo"**.
-- The meter shows the live model score; the detector fires on two consecutive
-  frames above the recommended threshold of 0.5, with a two-second cooldown.
-- Everything runs on the Space's CPU — no audio is stored.
-
-Synthetic-data honest-notice: recognition quality depends on your microphone,
-room and accent; the training data is synthetic. Train your own with
-[wakesmith](https://github.com/yannikheizmann/wakesmith) for your voice.
+A live demo of the wake-word model trained with
+[wakesmith](https://github.com/yannikheizmann/wakesmith). Everything runs in
+your browser: the mel front end is computed from the model's own DFT weights
+and the classifier runs with onnxruntime-web. The streaming pipeline was
+verified numerically against openWakeWord's runtime (frame-by-frame).

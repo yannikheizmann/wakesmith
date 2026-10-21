@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" role="img" aria-label="wakesmith: forge a custom wake word with one command">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2A0000"/>
+      <stop offset="1" stop-color="#3A0A0A"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" x2="1">
+      <stop offset="0" stop-color="#DA8C8C" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#DA8C8C" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#DA8C8C" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blob" x="-10%" y="-10%" width="120%" height="120%"
+            color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 100 -38.72"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="320" rx="24" fill="url(#bg)"/>
+  <path d="M0 292 C80 292 100 276 140 292 S200 308 240 292 S300 266 340 292 S400 312 440 292 S500 282 540 292 S620 258 680 292 S760 312 820 292 S900 276 960 292 S1060 304 1120 292 S1220 286 1280 292"
+        fill="none" stroke="url(#wave)" stroke-width="3"/>
+  <g transform="translate(-17.5 -8.5) scale(0.5)" filter="url(#blob)">
+    <rect x="176" y="379" width="188" height="117" rx="20" ry="20" fill="#FFEAA5"/>
+    <rect x="218" y="256" width="188" height="69" rx="16" ry="16" fill="#FFEAA5"/>
+    <rect x="406" y="301" width="72" height="202" rx="22" ry="22" fill="#FFEAA5"/>
+    <rect x="424" y="163" width="188" height="95" rx="19" ry="19" fill="#FFEAA5"/>
+    <rect x="536" y="229" width="178" height="270" rx="35" ry="35" fill="#FFEAA5"/>
+  </g>
+  <text x="380" y="158" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="92" font-weight="800" fill="#FFEAA5" letter-spacing="-3">wake<tspan fill="#DA8C8C">smith</tspan></text>
+  <text x="384" y="210" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" fill="#FFEAA5" fill-opacity="0.72">Forge a custom wake word with one command.</text>
+  <text x="384" y="252" font-family="'JetBrains Mono', Menlo, Consolas, monospace" font-size="24" fill="#DA8C8C">$ uv run wakesmith "tomtom"</text>
+</svg>
