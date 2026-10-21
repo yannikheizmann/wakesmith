@@ -103,7 +103,9 @@ is added automatically; `--negatives` adds more for any run.
 ## Documentation
 
 The [documentation](https://yannikheizmann.github.io/wakesmith/) walks through every
-stage, every option and the problems with the existing recipes.
+stage, every option and the problems with the existing recipes — including a
+[live browser demo](https://yannikheizmann.github.io/wakesmith/demo/) where you can
+speak to a model trained with this pipeline.
 
 ## Tests
 
