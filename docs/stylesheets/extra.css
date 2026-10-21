@@ -1,12 +1,13 @@
 :root {
-  --wakesmith-ink: #14172b;
-  --wakesmith-ember: #ff8a3d;
-  --wakesmith-ash: #c8cbe0;
+  --wakesmith-ink: #2a0000;
+  --wakesmith-rose: #da8c8c;
+  --wakesmith-rose-deep: #a64848;
+  --wakesmith-sand: #ffeaa5;
   --md-primary-fg-color: var(--wakesmith-ink);
-  --md-primary-fg-color--light: #262a4a;
+  --md-primary-fg-color--light: #3a0a0a;
   --md-primary-fg-color--dark: var(--wakesmith-ink);
-  --md-accent-fg-color: var(--wakesmith-ember);
-  --md-typeset-a-color: #c4561a;
+  --md-accent-fg-color: var(--wakesmith-rose);
+  --md-typeset-a-color: var(--wakesmith-rose-deep);
 }
 
 .md-header__button.md-logo img {
@@ -29,8 +30,8 @@
 
 .md-typeset .md-button:focus,
 .md-typeset .md-button:hover {
-  background-color: var(--wakesmith-ember);
-  border-color: var(--wakesmith-ember);
+  background-color: var(--wakesmith-rose);
+  border-color: var(--wakesmith-rose);
   color: var(--wakesmith-ink);
 }
 

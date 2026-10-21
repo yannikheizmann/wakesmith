@@ -7,7 +7,7 @@ copyright: Copyright &copy; 2026 Yannik Heizmann
 
 theme:
   name: material
-  logo: assets/wakesmith_logo_white.svg
+  logo: assets/wakesmith_mark.svg
   favicon: assets/wakesmith_favicon.svg
   font:
     text: Inter
