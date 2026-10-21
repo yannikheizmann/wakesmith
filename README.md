@@ -20,6 +20,7 @@ integration.
 
 ```bash
 uv run wakesmith "tomtom"
+uv run wakesmith "computer" --micro   # int8 TFLite for ESP32-S3/Voice PE (microWakeWord)
 ```
 
 

@@ -67,6 +67,7 @@ evaluation:
 | `negative_speech` | `train_hours`, `validation_hours`, `evaluation_hours` | 60 / 6 / 6 | hours of speech |
 | `augmentation` | `rounds`, `background_clips` | 3, 4,000 | augmented copies, noise windows |
 | `training` | `model_size` | medium | tiny, small, medium or large |
+| `training` | `micro` | false | train a microWakeWord int8 TFLite model (ESP32/Voice PE) instead of openWakeWord ONNX; needs `uv sync --extra micro` |
 | `training` | `steps` | 60,000 | first-phase steps |
 | `training` | `hard_negatives` | 20,000 | mined windows (0 disables) |
 | `training` | `target_false_activations_per_hour` | 0.2 | validation limit |
