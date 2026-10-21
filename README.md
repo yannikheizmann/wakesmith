@@ -115,6 +115,11 @@ uv sync --frozen --extra dev
 uv run --frozen pytest -q
 ```
 
+## Live demo
+
+Say **"yambo"** to the model trained with wakesmith — running with the real
+openWakeWord streaming pipeline on [Hugging Face Spaces](https://huggingface.co/spaces/yahzm/yambo-wake-word).
+
 ## Contributing and security
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the development workflow and conventions.
