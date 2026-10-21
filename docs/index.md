@@ -6,7 +6,7 @@ hide:
   - toc
 ---
 
-![wakesmith: forge a custom wake word with one command](assets/wakesmith_banner.svg){ .figure }
+[![Say "yambo" to a model trained with wakesmith — live in your browser](assets/wakesmith_banner.svg){ .figure }](demo/)
 
 wakesmith trains a custom wake-word detector from nothing but the word itself. It
 synthesises thousands of speakers saying it, keeps only the clips a speech recogniser hears
@@ -19,10 +19,30 @@ uv run wakesmith "tomtom"
 
 <div class="homepage-actions" markdown>
 
-[Train your first wake word](guides/usage.md){ .md-button .md-button--primary }
+[Try it live — say "yambo"](demo/){ .md-button .md-button--primary }
+[Train your first wake word](guides/usage.md){ .md-button }
 [How it works](method/index.md){ .md-button }
 
 </div>
+
+## Say "yambo" — live demo
+
+A model trained with this pipeline runs right here. Click, allow the microphone,
+say the word — everything stays in your browser.
+
+<div id="wake-demo" class="wake-demo">
+  <button id="wake-demo-start" type="button">Download model</button>
+  <div class="wake-demo-meter">
+    <div class="wake-demo-track"><div id="wake-demo-bar"></div><div class="wake-demo-threshold"></div></div>
+    <span class="wake-demo-score-label">score <code id="wake-demo-score">0.000</code></span>
+  </div>
+  <div class="wake-demo-foot">
+    <span>detections: <strong id="wake-demo-count">0</strong></span>
+    <span id="wake-demo-status">click to download the model (about 2.5 MB, once per browser)</span>
+  </div>
+</div>
+
+<script src="assets/wake-demo.js" defer></script>
 
 ## Runtime-identical features
 

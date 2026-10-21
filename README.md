@@ -21,6 +21,8 @@ integration.
 uv run wakesmith "tomtom"
 ```
 
+**Try it live:** [say "yambo" to a model trained with wakesmith, in your browser](https://yannikheizmann.github.io/wakesmith/demo/).
+
 ## Why wakesmith?
 
 The open-source recipes that exist today train on data the finished model never sees.

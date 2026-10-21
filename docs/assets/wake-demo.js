@@ -14,7 +14,7 @@
     cls: "../assets/models/yambo.onnx",
   };
   var WEIGHTS_URL = "../assets/models/mel-weights.bin";
-  var MEL_BINS = 120, MEL_TAPS = 512, MEL_OUT = 32;
+  var MEL_BINS = 120, MEL_TAPS = 512, MEL_OUT = 32; // exported DFT/filterbank weights
   var CHUNK = 1280; // 80 ms at 16 kHz
   var RAW_MAX = 160000; // 10 s of sample history, like openWakeWord's deque
   var MEL_MAX = 970;
@@ -27,7 +27,7 @@
   var el = {};
   var ort = null;
   var sessions = null;
-  var melWeights = null; // WREAL, WIMAG, MELW slices of one Float32Array
+  var melWeights = null;
   var pipeline = null;
   var audio = null;
   var processor = null;
@@ -107,8 +107,7 @@
   function classify() {
     var window = pipeline.featBuf.slice(-16);
     var flat = new Float32Array(16 * 96);
-    for (var i = 0; i < 16; i++)
-      for (var j = 0; j < 96; j++) flat[i * 96 + j] = window[i][j];
+    for (var i = 0; i < 16; i++) for (var j = 0; j < 96; j++) flat[i * 96 + j] = window[i][j];
     return sessions.cls
       .run({ embeddings: new ort.Tensor("float32", flat, [1, 16, 96]) })
       .then(function (out) { return Object.values(out)[0].data[0]; });
@@ -241,7 +240,6 @@
     var now = Date.now();
     if (score >= THRESHOLD && now >= cooldownUntil) {
       gateCount++;
-      el.gate.textContent = "gate: " + gateCount + "/" + GATE_FRAMES + " frames";
       if (gateCount >= GATE_FRAMES) {
         detections++;
         el.count.textContent = detections;
@@ -249,11 +247,9 @@
         setTimeout(function () { el.card.classList.remove("detected"); }, 600);
         gateCount = 0;
         cooldownUntil = now + COOLDOWN_MS;
-        el.gate.textContent = "detected — cooling down";
       }
     } else if (now >= cooldownUntil) {
       gateCount = 0;
-      el.gate.textContent = "gate: 0/" + GATE_FRAMES + " frames";
     }
   }
 
@@ -276,25 +272,40 @@
     return out;
   }
 
-  function start() {
-    el.button.disabled = true;
-    setStatus("Loading models (about 3 MB, once per browser)…");
+  function downloadModel() {
+    el.start.disabled = true;
+    setStatus("Loading model (about 2.5 MB, once per browser)…");
     if (!ort) {
       ort = window.ort;
       ort.env.wasm.numThreads = 1;
       ort.env.wasm.wasmPaths = ORT_BASE;
     }
-    Promise.all([
+    return Promise.all([
       ort.InferenceSession.create(MODEL_URLS.emb, { executionProviders: ["wasm"] }),
       ort.InferenceSession.create(MODEL_URLS.cls, { executionProviders: ["wasm"] }),
       fetch(WEIGHTS_URL).then(function (r) { return r.arrayBuffer(); }),
     ]).then(function (s) {
       sessions = { emb: s[0], cls: s[1] };
       melWeights = new Float32Array(s[2]);
-      setStatus("Requesting microphone…");
-      return navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-      });
+      setStatus("Priming…");
+      pipeline = new Pipeline();
+      return pipeline.prime();
+    }).then(function () {
+      el.start.disabled = false;
+      el.start.textContent = "Start listening";
+      setStatus("Model ready.");
+    }).catch(function (error) {
+      setStatus("Could not load the model: " + (error.message || error) + ".");
+      el.start.disabled = false;
+      throw error;
+    });
+  }
+
+  function startListening() {
+    el.start.disabled = true;
+    setStatus("Requesting microphone…");
+    navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
     }).then(function (mic) {
       stream = mic;
       audio = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
@@ -315,27 +326,20 @@
       source.connect(processor);
       processor.connect(mute);
       mute.connect(audio.destination);
-      setStatus("Priming the feature pipeline…");
-      pipeline = new Pipeline();
-      return pipeline.prime();
-    }).then(function () {
       running = true;
-      el.button.textContent = "Stop listening";
-      el.button.disabled = false;
-      el.button.classList.add("listening");
-      el.gate.textContent = "gate: 0/" + GATE_FRAMES + " frames";
-      setStatus("Listening — say “yambo”. (" + pipeline.melRowCount() + " mel frames, "
-        + pipeline.featureFrames().length + " feature frames buffered)");
+      el.start.textContent = "Listening… (click to stop)";
+      el.start.disabled = false;
+      setStatus("Say “yambo”.");
       timer = setInterval(function () {
         while (pending.length) pipeline.feed(pending.shift());
       }, 80);
     }).catch(function (error) {
-      setStatus("Could not start: " + (error.message || error) + ".");
-      stop(true);
+      setStatus("Could not access the microphone: " + (error.message || error) + ".");
+      el.start.disabled = false;
     });
   }
 
-  function stop(silent) {
+  function stop() {
     running = false;
     if (timer) { clearInterval(timer); timer = null; }
     pending = [];
@@ -344,24 +348,27 @@
     if (mute) { mute.disconnect(); mute = null; }
     if (audio) { audio.close(); audio = null; }
     if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; }
-    el.button.textContent = "Start listening";
-    el.button.classList.remove("listening");
-    el.button.disabled = false;
+    el.start.textContent = "Start listening";
+    el.start.disabled = false;
     el.bar.style.width = "0%";
-    if (!silent) setStatus("Stopped. Click start to try again.");
+    setStatus("Model ready.");
   }
 
   function init() {
     el.card = q("wake-demo");
-    el.button = q("wake-demo-button");
+    el.start = q("wake-demo-start");
     el.status = q("wake-demo-status");
     el.bar = q("wake-demo-bar");
     el.score = q("wake-demo-score");
     el.count = q("wake-demo-count");
-    el.gate = q("wake-demo-gate");
-    el.button.addEventListener("click", function () {
-      if (running) stop();
-      else start();
+    el.start.addEventListener("click", function () {
+      if (running) { stop(); return; }
+      if (!sessions) {
+        el.start.textContent = "Loading…";
+        downloadModel().then(startListening).catch(function () {});
+        return;
+      }
+      startListening();
     });
   }
 
