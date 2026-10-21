@@ -52,6 +52,17 @@ dependencies = [
     "rich>=13.9",
     "typer>=0.15",
     "wordfreq>=3.1",
+    # Imported directly by wakesmith; upstream extras only provide them
+    # transitively, so they are declared here with their locked versions.
+    "audiomentations>=0.43.1",
+    "espeakng-loader>=0.2.4",
+    "librosa>=0.11.0",
+    "misaki>=0.9.4",
+    "phonemizer-fork>=3.3.2",
+    "pyyaml>=6.0.3",
+    "requests>=2.34.2",
+    "scipy>=1.17.1",
+    "soundfile>=0.14.0",
 ]
 
 [project.urls]
@@ -69,6 +80,11 @@ docs = ["mkdocs-material>=9.6,<10"]
 [tool.uv]
 # The CUDA 12.8 wheels cover RTX 30xx, 40xx and 50xx (Blackwell) GPUs.
 environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+# openwakeword declares tflite-runtime on Linux, but every wakesmith path selects
+# the ONNX frameworks and tflite_runtime is imported lazily only for tflite models.
+# The last tflite-runtime release with Python 3.11 wheels (2.14.0) was yanked from
+# PyPI, which broke fresh resolutions, so the never-matching marker drops it.
+override-dependencies = ["tflite-runtime; sys_platform == 'never'"]
 
 [tool.uv.sources]
 torch = { index = "pytorch-cu128" }
