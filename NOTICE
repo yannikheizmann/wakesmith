@@ -9,11 +9,6 @@ This product depends on, and adapts ideas from, the following Apache-2.0 project
   and the Piper VITS sample generator. https://github.com/livekit/livekit-wakeword
 - Kokoro-82M (hexgrad): text-to-speech model and voices. https://huggingface.co/hexgrad/Kokoro-82M
 
-The browser demo bundles the openWakeWord embedding model (`embedding_model.onnx`,
-MIT, from the openWakeWord project) and a classifier trained with this pipeline.
-The mel front end is computed in the browser from the DFT and filterbank weights
-extracted from openWakeWord's `melspectrogram.onnx` (MIT); that front end derives
-from Google's speech_embedding (Apache-2.0, https://tfhub.dev/google/speech_embedding/1).
 
 Further models and datasets are downloaded at run time and remain under their own terms:
 VoxCPM2 (OpenBMB), Whisper large-v3-turbo (OpenAI), Piper LibriTTS voice (Rhasspy),
