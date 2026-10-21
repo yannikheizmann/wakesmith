@@ -19,6 +19,7 @@ uv run wakesmith "tomtom"
 
 <div class="homepage-actions" markdown>
 
+[Try "yambo" — live demo on Hugging Face](https://huggingface.co/spaces/yannikheizmann/wakesmith-demo){ .md-button }
 [Train your first wake word](guides/usage.md){ .md-button .md-button--primary }
 [How it works](method/index.md){ .md-button }
 
