@@ -9,11 +9,15 @@
   "use strict";
 
   var ORT_BASE = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/";
-  var MODEL_URLS = {
-    emb: "../assets/models/embedding_model.onnx",
-    cls: "../assets/models/yambo.onnx",
-  };
-  var WEIGHTS_URL = "../assets/models/mel-weights.bin";
+  // Resolve asset paths from this script's own URL, so the widget works from
+  // any page depth (front page and demo page alike).
+  var SCRIPT_SRC = (document.currentScript && document.currentScript.src) || "";
+  var ASSET_BASE = SCRIPT_SRC.replace(/wake-demo\.js.*$/, "");
+  var MODEL_FILES = [
+    { key: "emb", url: ASSET_BASE + "assets/models/embedding_model.onnx" },
+    { key: "cls", url: ASSET_BASE + "assets/models/yambo.onnx" },
+    { key: "mel", url: ASSET_BASE + "assets/models/mel-weights.bin" },
+  ];
   var MEL_BINS = 120, MEL_TAPS = 512, MEL_OUT = 32; // exported DFT/filterbank weights
   var CHUNK = 1280; // 80 ms at 16 kHz
   var RAW_MAX = 160000; // 10 s of sample history, like openWakeWord's deque
@@ -274,28 +278,66 @@
 
   function downloadModel() {
     el.start.disabled = true;
-    setStatus("Loading model (about 2.5 MB, once per browser)…");
     if (!ort) {
       ort = window.ort;
       ort.env.wasm.numThreads = 1;
       ort.env.wasm.wasmPaths = ORT_BASE;
     }
-    return Promise.all([
-      ort.InferenceSession.create(MODEL_URLS.emb, { executionProviders: ["wasm"] }),
-      ort.InferenceSession.create(MODEL_URLS.cls, { executionProviders: ["wasm"] }),
-      fetch(WEIGHTS_URL).then(function (r) { return r.arrayBuffer(); }),
-    ]).then(function (s) {
-      sessions = { emb: s[0], cls: s[1] };
-      melWeights = new Float32Array(s[2]);
+    var loaded = {}; // key -> ArrayBuffer
+    var receivedTotal = 0, totalBytes = 0;
+    var progress = function () {
+      var pct = totalBytes ? Math.round((receivedTotal / totalBytes) * 100) : 0;
+      el.progress.style.width = pct + "%";
+      setStatus("Loading model… " + pct + "% (" + Math.round(receivedTotal / 1024) + " of "
+        + Math.round(totalBytes / 1024) + " KB)");
+    };
+    return Promise.all(MODEL_FILES.map(function (file) {
+      return fetch(file.url).then(function (response) {
+        if (!response.ok) throw new Error("HTTP " + response.status + " for " + file.url);
+        totalBytes += Number(response.headers.get("content-length")) || 0;
+        progress();
+        if (!response.body) return response.arrayBuffer().then(function (b) { loaded[file.key] = b; });
+        var reader = response.body.getReader();
+        var chunks = [], received = 0;
+        function pump() {
+          return reader.read().then(function (result) {
+            if (result.done) {
+              var out = new Uint8Array(received), offset = 0;
+              for (var i = 0; i < chunks.length; i++) { out.set(chunks[i], offset); offset += chunks[i].length; }
+              loaded[file.key] = out.buffer;
+              receivedTotal += received;
+              progress();
+              return null;
+            }
+            chunks.push(result.value);
+            received += result.value.length;
+            receivedTotal += result.value.length;
+            progress();
+            return pump();
+          });
+        }
+        return pump();
+      });
+    })).then(function () {
+      progress();
       setStatus("Priming…");
-      pipeline = new Pipeline();
-      return pipeline.prime();
+      return Promise.all([
+        ort.InferenceSession.create(loaded.emb, { executionProviders: ["wasm"] }),
+        ort.InferenceSession.create(loaded.cls, { executionProviders: ["wasm"] }),
+      ]).then(function (s) {
+        sessions = { emb: s[0], cls: s[1] };
+        melWeights = new Float32Array(loaded.mel);
+        el.progress.style.width = "0%";
+        pipeline = new Pipeline();
+        return pipeline.prime();
+      });
     }).then(function () {
       el.start.disabled = false;
       el.start.textContent = "Start listening";
-      setStatus("Model ready.");
+      setStatus("Model ready — allow the microphone, then say “yambo”.");
     }).catch(function (error) {
       setStatus("Could not load the model: " + (error.message || error) + ".");
+      el.progress.style.width = "0%";
       el.start.disabled = false;
       throw error;
     });

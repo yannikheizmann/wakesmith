@@ -26,7 +26,6 @@ theme:
 
 nav:
   - Home: index.md
-  - Try it: demo.md
   - Guides:
       - Installation: guides/installation.md
       - Training a wake word: guides/usage.md

@@ -21,7 +21,7 @@ integration.
 uv run wakesmith "tomtom"
 ```
 
-**Try it live:** [say "yambo" to a model trained with wakesmith, in your browser](https://yannikheizmann.github.io/wakesmith/demo/).
+**Try it live:** [say "yambo" to a model trained with wakesmith, in your browser](https://yannikheizmann.github.io/wakesmith/).
 
 ## Why wakesmith?
 
@@ -106,7 +106,7 @@ is added automatically; `--negatives` adds more for any run.
 
 The [documentation](https://yannikheizmann.github.io/wakesmith/) walks through every
 stage, every option and the problems with the existing recipes — including a
-[live browser demo](https://yannikheizmann.github.io/wakesmith/demo/) where you can
+[live browser demo](https://yannikheizmann.github.io/wakesmith/) where you can
 speak to a model trained with this pipeline.
 
 ## Tests

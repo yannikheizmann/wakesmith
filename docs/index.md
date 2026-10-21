@@ -6,7 +6,7 @@ hide:
   - toc
 ---
 
-[![Say "yambo" to a model trained with wakesmith — live in your browser](assets/wakesmith_banner.svg){ .figure }](demo/)
+[![Say "yambo" to a model trained with wakesmith — live in your browser](assets/wakesmith_banner.svg){ .figure }](#say-yambo-live-demo)
 
 wakesmith trains a custom wake-word detector from nothing but the word itself. It
 synthesises thousands of speakers saying it, keeps only the clips a speech recogniser hears
@@ -19,7 +19,7 @@ uv run wakesmith "tomtom"
 
 <div class="homepage-actions" markdown>
 
-[Try it live — say "yambo"](demo/){ .md-button .md-button--primary }
+[Try it live — say "yambo"](#say-yambo-live-demo){ .md-button .md-button--primary }
 [Train your first wake word](guides/usage.md){ .md-button }
 [How it works](method/index.md){ .md-button }
 
@@ -32,6 +32,7 @@ say the word — everything stays in your browser.
 
 <div id="wake-demo" class="wake-demo">
   <button id="wake-demo-start" type="button">Download model</button>
+  <div class="wake-demo-progress"><div id="wake-demo-progress-bar"></div></div>
   <div class="wake-demo-meter">
     <div class="wake-demo-track"><div id="wake-demo-bar"></div><div class="wake-demo-threshold"></div></div>
     <span class="wake-demo-score-label">score <code id="wake-demo-score">0.000</code></span>

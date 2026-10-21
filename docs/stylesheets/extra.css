@@ -96,3 +96,13 @@
 }
 .wake-demo-foot strong { color: var(--wakesmith-sand); }
 .wake-demo-foot #wake-demo-status { text-align: right; }
+
+/* model download progress */
+.wake-demo-progress {
+  background: #3a0a0a; border-radius: 6px; height: 8px; margin-bottom: 0.5rem; overflow: hidden;
+}
+.wake-demo-progress > div {
+  background: var(--wakesmith-sand); height: 100%; left: 0; position: absolute; top: 0;
+  transition: width 120ms linear; width: 0;
+}
+.wake-demo-progress { position: relative; }
