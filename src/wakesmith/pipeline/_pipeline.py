@@ -35,6 +35,15 @@ STAGES = {
     "evaluate": "Evaluate on held-out data",
 }
 
+MICRO_STAGES = {
+    "download": "Download data and models",
+    "synthesise": "Synthesise speech",
+    "screen": "Screen clips with Whisper",
+    "micro_features": "Generate micro-frontend spectrograms",
+    "micro_train": "Train microWakeWord model",
+    "micro_export": "Export TFLite and manifest",
+}
+
 
 class Pipeline:
     """One training run: its arguments, a shared cache and a run directory."""
@@ -54,10 +63,11 @@ class Pipeline:
         os.environ.setdefault("NLTK_DATA", str(self.assets.root / "nltk"))
         os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
         subtitle = f"{self.args.language} · {self.run_dir}"
+        stages = MICRO_STAGES if self.args.training.micro else STAGES
         with Display(
-            f'wakesmith · "{self.args.wake_word}"', subtitle, STAGES, self.run_dir / "logs"
+            f'wakesmith · "{self.args.wake_word}"', subtitle, stages, self.run_dir / "logs"
         ) as display:
-            for key in STAGES:
+            for key in stages:
                 marker = self.run_dir / f".{key}.done"
                 with display.stage(key, cached=marker.exists()):
                     if not marker.exists():
@@ -77,6 +87,41 @@ class Pipeline:
 
         for url, target, _ in items:
             download(url, target, advance)
+
+    def _micro_features(self, display: Display) -> None:
+        from wakesmith.micro import download_negative_spectrograms, stage_positive_spectrograms
+
+        counts = stage_positive_spectrograms(self.clips, self.run_dir, self.assets, self.args.seed)
+        display.detail("micro_features", f"{counts} split folders staged")
+        download_negative_spectrograms(self.run_dir)
+
+    def _micro_train(self, display: Display) -> None:
+        from wakesmith.micro import train_micro_model, write_training_config
+
+        config_path = write_training_config(self.args, self.run_dir)
+        display.detail("micro_train", f"training with {config_path}")
+        tflite, log = train_micro_model(self.args, config_path)
+        (self.run_dir / "micro" / "best.tflite").write_bytes(tflite.read_bytes())
+        (self.run_dir / "micro_training.log").write_text(log)
+
+    def _micro_export(self, display: Display) -> None:
+        from wakesmith.micro import export
+
+        tflite = self.run_dir / "micro" / "best.tflite"
+        model, manifest_path, manifest = export(self.args, self.run_dir, tflite)
+        self.model = model
+        display.detail("micro_export", f"tensor arena {manifest['micro']['tensor_arena_size']} B")
+        _write_json(
+            self.run_dir / EVALUATION_FILENAME,
+            {
+                "backend": "microwakeword",
+                "thresholds": [str(manifest["micro"]["probability_cutoff"])],
+                "note": (
+                    "Evaluated with the microWakeWord test harness during training; "
+                    "see micro_training.log and the ESPHome manifest."
+                ),
+            },
+        )
 
     def _synthesiser(self):
         from wakesmith.synthesis import Synthesiser

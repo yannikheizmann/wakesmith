@@ -45,4 +45,12 @@ class TrainingArgs(ArgsBase):
         lt=1,
         description="Recommended unless validation requires a higher threshold.",
     )
+    micro: bool = Field(
+        default=False,
+        description=(
+            "Train a microWakeWord model (int8 TFLite + ESPHome manifest) for "
+            "ESP32-S3/Voice PE devices instead of an openWakeWord ONNX model. "
+            "Requires the `micro` extra and a CPU/GPU TensorFlow environment."
+        ),
+    )
     batch: BatchArgs = Field(default_factory=BatchArgs)

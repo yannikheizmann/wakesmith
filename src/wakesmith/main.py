@@ -48,6 +48,14 @@ def main(
             help="Synthesise with VoxCPM2 too (default on; ~12 GB RAM, slower).",
         ),
     ] = None,
+    micro: Annotated[
+        bool,
+        typer.Option(
+            "--micro",
+            help="Train a microWakeWord model (int8 TFLite for ESP32/Voice PE) "
+            "instead of an openWakeWord ONNX model. Requires `uv sync --extra micro`.",
+        ),
+    ] = False,
     config: Annotated[
         Path | None,
         typer.Option(help="YAML file overriding any argument; see the documentation.", exists=True),
@@ -75,12 +83,18 @@ def main(
         overrides["extra_negative_phrases"] = negative
     if voxcpm is not None:
         overrides["voxcpm"] = {"enabled": voxcpm}
+    if micro:
+        overrides["training"] = {"micro": True}
     try:
         args = Args.resolve(wake_word, config, **overrides)
     except ValueError as error:
         raise typer.BadParameter(str(error)) from None
     pipeline = Pipeline(args, work_dir.resolve(), (cache_dir or _cache_root()).resolve())
     model = pipeline.run()
+    if args.training.micro:
+        manifest = json.loads((pipeline.run_dir / "manifest.json").read_text())
+        _summary_micro(Console(), model, manifest)
+        return
     card = json.loads((pipeline.run_dir / MODEL_CARD_FILENAME.format(slug=args.slug)).read_text())
     _summary(Console(), model, card)
 
@@ -107,3 +121,16 @@ def _summary(console, model: Path, card: dict) -> None:
 
 if __name__ == "__main__":
     app()
+
+
+def _summary_micro(console, model, manifest: dict) -> None:
+    micro = manifest["micro"]
+    console.print(
+        f"[bold]microWakeWord model:[/] {model}\n"
+        f"probability_cutoff {micro['probability_cutoff']} · sliding window "
+        f"{micro['sliding_window_size']} frames · tensor arena "
+        f"{micro['tensor_arena_size']} B\n"
+        f"manifest: {model.parent / 'manifest.json'}\n"
+        "Flash with ESPHome (micro_wake_word); tune probability_cutoff after "
+        "testing on your hardware."
+    )

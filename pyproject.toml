@@ -75,6 +75,13 @@ wakesmith = "wakesmith.main:app"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.12"]
+micro = [
+    "tensorflow>=2.15,<3",
+    "microwakeword @ git+https://github.com/kahrendt/microWakeWord.git",
+    "mmap-ninja>=1.9",
+    "datasets>=2.19",
+    "tqdm>=4.66",
+]
 docs = ["mkdocs-material>=9.6,<10"]
 
 [tool.uv]

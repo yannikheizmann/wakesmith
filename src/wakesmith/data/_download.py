@@ -74,7 +74,8 @@ def plan(assets: Assets, args: Args) -> list[tuple[str, Path, int]]:
             if not (root / path).exists():
                 items.append((f"{HF}/{prefix}{repo}/resolve/{revision}/{path}", root / path, size))
 
-    hub(FEATURES, [assets.acav.name, assets.validation.name], assets.acav.parent)
+    if not args.training.micro:
+        hub(FEATURES, [assets.acav.name, assets.validation.name], assets.acav.parent)
     hub(RIRS, ["16khz/*.wav"], assets.rirs.parent)
     hub(MUSAN, ["music/*", "noise/*", "speech/*"], assets.musan)
     hub(KOKORO, ["config.json", "kokoro-v1_0.pth", "voices/*.pt"], assets.kokoro)
@@ -95,7 +96,8 @@ def plan(assets: Assets, args: Args) -> list[tuple[str, Path, int]]:
         ):
             if not target.exists():
                 items.append((PIPER + suffix, target, 0))
-    for name in ("melspectrogram.onnx", "embedding_model.onnx"):
-        if not (assets.openwakeword / name).exists():
-            items.append((f"{OPENWAKEWORD}/{name}", assets.openwakeword / name, 0))
+    if not args.training.micro:
+        for name in ("melspectrogram.onnx", "embedding_model.onnx"):
+            if not (assets.openwakeword / name).exists():
+                items.append((f"{OPENWAKEWORD}/{name}", assets.openwakeword / name, 0))
     return [item for item in items if not item[1].name.startswith(".")]
