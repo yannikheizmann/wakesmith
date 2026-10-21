@@ -286,8 +286,9 @@
     var loaded = {}; // key -> ArrayBuffer
     var receivedTotal = 0, totalBytes = 0;
     var progress = function () {
-      var pct = totalBytes ? Math.round((receivedTotal / totalBytes) * 100) : 0;
+      var pct = totalBytes ? Math.min(100, Math.round((receivedTotal / totalBytes) * 100)) : 0;
       el.progress.style.width = pct + "%";
+      el.start.textContent = "Downloading… " + pct + "%";
       setStatus("Loading model… " + pct + "% (" + Math.round(receivedTotal / 1024) + " of "
         + Math.round(totalBytes / 1024) + " KB)");
     };

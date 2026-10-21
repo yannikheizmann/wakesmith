@@ -19,8 +19,7 @@ uv run wakesmith "tomtom"
 
 <div class="homepage-actions" markdown>
 
-[Try it live — say "yambo"](#say-yambo-live-demo){ .md-button .md-button--primary }
-[Train your first wake word](guides/usage.md){ .md-button }
+[Train your first wake word](guides/usage.md){ .md-button .md-button--primary }
 [How it works](method/index.md){ .md-button }
 
 </div>
@@ -43,7 +42,7 @@ say the word — everything stays in your browser.
   </div>
 </div>
 
-<script src="assets/wake-demo.js" defer></script>
+<script src="assets/wake-demo.js?v=3" defer></script>
 
 ## Runtime-identical features
 
